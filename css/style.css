@@ -1,0 +1,59 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+.brand-logo, .group-team{
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: -0.5px !important;
+}
+.topnav, .sidenav{
+    font-weight: 400;
+}
+.accent-color{
+    background-color: #283149;
+}
+.text-accent-color{
+    color: #404b69;
+}
+.word-wrap{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.klasemen-content{
+    text-align: right;
+}
+.klasemen-content .col{
+    padding:10px 0;
+    border-bottom: 0.5px solid #404b69;
+}
+.klasemen-content .word-wrap{
+    text-align: left;
+}
+.klasemen-content div img{
+    width: 15px;
+    height: 15px;
+}
+a{
+    text-decoration: none;
+    color: unset;
+}
+.card-action a{
+    color: #283149 !important;
+}
+.card-action a:hover{
+    color: #404b69 !important;
+}
+.text-strong{
+    font-weight: 700 !important;
+}
+.card-image{
+    padding: 15px;
+    margin: 0 auto;
+}
+@media only screen and (min-width: 601px) {
+    .card-image{
+        width: 30%;
+        padding: 15px;
+        margin: 0 auto;
+    }
+}

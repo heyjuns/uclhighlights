@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UCL</title>
+    <meta name="description" content="Submission PWA 2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#00897B" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+</head>
+
+<body class="grey lighten-3">
+    <nav class="accent-color" role="navigation">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo" id="logo-container">UCLHIGHLIGHTS</a>
+            <a href="./index.html" class="sidenav-trigger" data-target="nav-mobile">
+                <i class="material-icons">arrow_back</i>
+            </a>
+            <ul class="topnav right hide-on-med-and-down">
+                <li><a href="./index.html" class="waves-effect">BACK</a></li>
+            </ul>
+            <ul class="sidenav" id="nav-mobile"></ul>
+        </div>
+    </nav>
+
+    <div class="progress" id="preloader">
+        <div class="indeterminate"></div>
+    </div>
+
+    <div id="team-detail"></div>
+
+
+
+    <script src="js/materialize.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="./dom.js"></script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker.register("/service-worker.js").then(function () {
+                    console.log('Pendaftaran SW Berhasil');
+                }).catch(function () {
+                    console.log('Pendaftaran SW Gagal');
+                })
+            })
+        } else {
+            console.log('SW belum didukung di browser ini');
+        }
+        document.addEventListener("DOMContentLoaded", async function () {
+            teamDetailDOM().finally(() => {
+                document.querySelector("#preloader").remove();
+            });
+        })
+    </script>
+</body>
+
+</html>
