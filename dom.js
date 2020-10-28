@@ -1,29 +1,62 @@
+async function pertandinganDOM() {
+    console.log("pertandingan DOM");
+    const cacheUrl = `${BASEURL}/matches?competitions=2001`
+    return new Promise(async (resolve, reject) => {
+        try {
+            if ('caches' in window) {
+                let objectFromCaches = await (await caches.match(cacheUrl)).json();
+                if (objectFromCaches) {
+                    console.log(`cache ${cacheUrl} found, load data from cache`);
+                    generateDataForPertandingan(objectFromCaches);
+                    resolve(objectFromCaches);
+                }
+            }
+        } catch (error) {
+            console.log(`cache ${cacheUrl} not found, load data from API`);
+            try {
+                let objectFromAPI = await jadwalTanding();
+                generateDataForPertandingan(objectFromAPI);
+                resolve(objectFromAPI);
+            } catch (error) {
+                reject(error);
+            }
+
+        }
+    })
+};
+
 async function klasemenDOM() {
     const cacheUrl = `${BASEURL}/competitions/2001/standings`;
-    try {
-        // mencoba cek apakah caches sudah ada
-        if ('caches' in window) {
-            let objectFromCaches = await (await caches.match(cacheUrl)).json();
-            if (objectFromCaches) {
-                let TOTALTYPE = objectFromCaches.standings.filter(x => x.type === "TOTAL");
-                console.log(`cache ${cacheUrl} found, load data from cache`);
+    return new Promise(async (resolve, reject) => {
+        try {
+            // mencoba cek apakah caches sudah ada
+            if ('caches' in window) {
+                let objectFromCaches = await (await caches.match(cacheUrl)).json();
+                if (objectFromCaches) {
+                    let TOTALTYPE = objectFromCaches.standings.filter(x => x.type === "TOTAL");
+                    console.log(`cache ${cacheUrl} found, load data from cache`);
+                    generateDataForKlasemen(TOTALTYPE);
+                    resolve(TOTALTYPE);
+                }
+            }
+        } catch (error) {
+            console.log(`cache ${cacheUrl} not found, load data from API`);
+            try {
+                let data = await klasemenLiga();
+                // Filter array untuk mengambil properti type === "TOTAL"
+                let TOTALTYPE = data.standings.filter(x => x.type === "TOTAL");
                 generateDataForKlasemen(TOTALTYPE);
+                resolve(TOTALTYPE);
+            } catch (error) {
+                reject(error);
             }
         }
-    } catch (error) {
-        console.log(`cache ${cacheUrl} not found, load data from API`);
-        let data = await klasemenLiga();
-        // Filter array untuk mengambil properti type === "TOTAL"
-        let TOTALTYPE = data.standings.filter(x => x.type === "TOTAL");
-        generateDataForKlasemen(TOTALTYPE);
-    }
-
-
+    })
 }
 
 function teamDetailDOM() {
     const idParam = new URLSearchParams(window.location.search).get("id");
-    const cacheUrl = `${BASEURL}/teams/${idParam}`
+    const cacheUrl = `${BASEURL}/teams/${idParam}`;
     return new Promise(async (resolve, reject) => {
         try {
             if ('caches' in window) {
@@ -31,7 +64,7 @@ function teamDetailDOM() {
                 if (objectFromCaches) {
                     console.log(`cache ${cacheUrl} found, load data from cache`);
                     generateDataForTeamDetail(objectFromCaches);
-                    resolve(objectFromCaches)
+                    resolve(objectFromCaches);
                 }
             }
         } catch (error) {
@@ -39,7 +72,7 @@ function teamDetailDOM() {
             try {
                 let objectFromAPI = await TeamDetail(idParam);
                 generateDataForTeamDetail(objectFromAPI);
-                resolve(objectFromAPI)
+                resolve(objectFromAPI);
             } catch (error) {
                 errorDOM();
                 reject(error);
@@ -55,18 +88,45 @@ function errorDOM() {
     let errorHTML = "";
     errorHTML += `
                 <div class="row container text-accent-color">
-                <div class="col s12">
-                    <h3>
-                        Fetch Error. Please Check your connection
-                    </h3>
-                </div>
+                    <div class="col s12">
+                        <h3>
+                            Fetch Error. Please Check your connection
+                        </h3>
+                    </div>
                 </div>
                 `;
     document.querySelector("#team-detail").innerHTML = errorHTML;
 }
+async function generateDataForPertandingan(obj) {
+    pertandinganHTML = "";
+    console.log(obj);
 
+    obj.matches.forEach((element,index) => {
+        pertandinganHTML += `
+        <div class="col s12 m6">
+            <div class="card grey lighten-4">
+            <div class="card-content text-accent-color valign center">
+                <span class="card-title group-team">${element.group}</span>
+                <div class="match-detail">
+                    <div class="border-bottom">${element.awayTeam.name}</div>
+                    <div>${element.homeTeam.name}</div>
+                </div>
+                <div>${new Date(element.utcDate).toLocaleString()}</div>
+            </div>
+            <div class="card-action">
+                <a onclick="simpanPertandingan(${JSON.stringify(element).split('"').join("&quot;")})">Reminder</a>
+            </div>
+            </div>
+        </div>
+        `
+    });
+    document.querySelector("#pertandingan").innerHTML = pertandinganHTML;
+}
+function simpanPertandingan(param){
+    console.log(param);
+}
 function generateDataForTeamDetail(data) {
-    teamHTML = '';
+    teamHTML = "";
     teamHTML += `
     <div class="row container">
         <div class="col s12">
@@ -83,14 +143,14 @@ function generateDataForTeamDetail(data) {
                     <p>email : ${data.email}</p>
                 </div>
                 <div class="card-action">
-                <a href="${data.website}" target="_blank">website</a>
-                <a href="#" class="activator">See Squad</a>
-                <a href="#">Save</a>
+                    <a href="${data.website}" target="_blank">website</a>
+                    <a href="#" class="activator">See Squad</a>
+                    <a href="#">Save</a>
                 </div>
                 <div class="card-reveal text-accent-color">
-                <span class="card-title group-team text-strong">Detail Squad<i class="material-icons right">close</i></span>
-                <table id="team-squad"></table>
-              </div>
+                    <span class="card-title group-team text-strong">Detail Squad<i class="material-icons right">close</i></span>
+                    <table id="team-squad"></table>
+                </div>
             </div>
         </div>
     </div>
@@ -105,7 +165,7 @@ function generateDataForTeamDetail(data) {
         <th>Nationality</th>
         <th>Position</th>
     </tr>
-  </thead>
+    </thead>
     `;
     data.squad.forEach((player, index) => {
         playerHTML += `
@@ -142,68 +202,65 @@ function generateDataForKlasemen(obj) {
     for (let i = 0; i < obj.length; i++) {
         teamHTML += `
     <div class="group-team text-strong">
-    <div class="col s5 word-wrap">
-        KLUB
-    </div>
-    <div class="col s1">
-        MA
-    </div>
-    <div class="col s1">
-        ME
-    </div>
-    <div class="col s1">
-        KA
-    </div>
-    <div class="col s1">
-        GM
-    </div>
-    <div class="col s1">
-        GA
-    </div>
-    <div class="col s1">
-        SG
-    </div>
-    <div class="col s1">
-        PTS
-    </div>
+        <div class="col s5 word-wrap">
+            KLUB
+        </div>
+        <div class="col s1">
+            MA
+        </div>
+        <div class="col s1">
+            ME
+        </div>
+        <div class="col s1">
+            KA
+        </div>
+        <div class="col s1">
+            GM
+        </div>
+        <div class="col s1">
+            GA
+        </div>
+        <div class="col s1">
+            SG
+        </div>
+        <div class="col s1">
+            PTS
+        </div>
     </div>
     `;
         for (let j = 0; j < obj[i].table.length; j++) {
             const team = obj[i]['table'][j];
             teamHTML += `
-        <a href="./teamDetail.html?id=${team.team.id}">
-            <div class="col s5 word-wrap">
-                <img src="${team.team.crestUrl}"/>
-                ${team.team.name}
-            </div>
-            <div class="col s1">
-                ${team.playedGames}
-            </div>
-            <div class="col s1">
-                ${team.won}
-            </div>
-            <div class="col s1">
-                ${team.lost}
-            </div>
-            <div class="col s1">
-                ${team.goalsFor}
-            </div>
-            <div class="col s1">
-                ${team.goalsAgainst}
-            </div>
-            <div class="col s1">
-                ${team.goalDifference}
-            </div>
-            <div class="col s1">
-                ${team.points}
-            </div>
-        </a>
+            <a href="./teamDetail.html?id=${team.team.id}">
+                <div class="col s5 word-wrap">
+                    <img src="${team.team.crestUrl}"/>
+                    ${team.team.name}
+                </div>
+                <div class="col s1">
+                    ${team.playedGames}
+                </div>
+                <div class="col s1">
+                    ${team.won}
+                </div>
+                <div class="col s1">
+                    ${team.lost}
+                </div>
+                <div class="col s1">
+                    ${team.goalsFor}
+                </div>
+                <div class="col s1">
+                    ${team.goalsAgainst}
+                </div>
+                <div class="col s1">
+                    ${team.goalDifference}
+                </div>
+                <div class="col s1">
+                    ${team.points}
+                </div>
+            </a>
         `;
         }
         document.getElementsByClassName("klasemen-content")[i].innerHTML = teamHTML;
         teamHTML = '';
     }
-
-    //Remove preloader
-    document.querySelector("#preloader").remove();
 }

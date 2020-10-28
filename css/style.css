@@ -26,6 +26,12 @@
     padding:10px 0;
     border-bottom: 0.5px solid #404b69;
 }
+.border-bottom{
+    border-bottom: 0.5px solid #404b69;
+}
+.match-detail{
+    margin: 10px 50px;
+}
 .klasemen-content .word-wrap{
     text-align: left;
 }

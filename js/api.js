@@ -5,9 +5,9 @@ const ADDITIONALHEADERS = {
     'X-Auth-Token': APIKEY
 }
 
-async function jadwalTanding(id) {
+async function jadwalTanding() {
     try {
-        let response = await (await fetch(`${BASEURL}/teams/${id}/matches?status=SCHEDULED`, { headers: ADDITIONALHEADERS })).json();
+        let response = await (await fetch(`${BASEURL}/matches?competitions=2001`, { headers: ADDITIONALHEADERS })).json();
         return Promise.resolve(response);
     } catch (error) {
         return Promise.reject(error)

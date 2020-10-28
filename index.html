@@ -28,12 +28,7 @@
         </div>
     </nav>
 
-    <div class="progress" id="preloader">
-        <div class="indeterminate"></div>
-    </div>
-    
-    <div class="row" id="klasemen"></div>
-
+    <div id="body-content"></div>
 
     <script src="js/materialize.min.js"></script>
     <script src="js/nav.js"></script>
@@ -52,10 +47,6 @@
         } else {
             console.log('SW belum didukung di browser ini');
         }
-
-        document.addEventListener("DOMContentLoaded", async function () {
-            klasemenDOM();
-        })
     </script>
 </body>
 
