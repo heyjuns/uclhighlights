@@ -24,7 +24,12 @@ async function pertandinganDOM() {
         }
     })
 };
-
+async function savedClubTeamDOM(){
+    const savedData = await getAll();
+    console.log(savedData);
+    console.log(savedData.length);
+    generateDataForSavedTeam(savedData);
+}
 async function klasemenDOM() {
     const cacheUrl = `${BASEURL}/competitions/2001/standings`;
     return new Promise(async (resolve, reject) => {
@@ -53,7 +58,6 @@ async function klasemenDOM() {
         }
     })
 }
-
 function teamDetailDOM() {
     const idParam = new URLSearchParams(window.location.search).get("id");
     const cacheUrl = `${BASEURL}/teams/${idParam}`;
@@ -81,9 +85,6 @@ function teamDetailDOM() {
         }
     })
 }
-
-
-
 function errorDOM() {
     let errorHTML = "";
     errorHTML += `
@@ -101,7 +102,7 @@ async function generateDataForPertandingan(obj) {
     pertandinganHTML = "";
     console.log(obj);
 
-    obj.matches.forEach((element,index) => {
+    obj.matches.forEach(element => {
         pertandinganHTML += `
         <div class="col s12 m6">
             <div class="card grey lighten-4">
@@ -145,7 +146,7 @@ function generateDataForTeamDetail(data) {
                 <div class="card-action">
                     <a href="${data.website}" target="_blank">website</a>
                     <a href="#" class="activator">See Squad</a>
-                    <a href="#">Save</a>
+                    <a href="#" id="saveTeam">Save</a>
                 </div>
                 <div class="card-reveal text-accent-color">
                     <span class="card-title group-team text-strong">Detail Squad<i class="material-icons right">close</i></span>
@@ -181,7 +182,6 @@ function generateDataForTeamDetail(data) {
     });
     document.querySelector("#team-squad").innerHTML = playerHTML;
 }
-
 function generateDataForKlasemen(obj) {
     let klasemenHTML = "";
     let teamHTML = "";
@@ -263,4 +263,69 @@ function generateDataForKlasemen(obj) {
         document.getElementsByClassName("klasemen-content")[i].innerHTML = teamHTML;
         teamHTML = '';
     }
+}
+
+function generateDataForSavedTeam(obj){
+    savedHTML = "";
+    obj.forEach(data => {
+        savedHTML += `
+        <div class="col s12 m6">
+        <div class="card detail-card grey lighten-4">
+        <div class="card-image">
+            <img src="${data.crestUrl}">
+        </div>
+        <div class="card-content text-accent-color">
+            <span class="group-team text-strong card-title">${data.name}</span>
+            <p>Short Name : ${data.shortName}</p>
+            <p>Club Colors : ${data.clubColors}</p>
+            <p>Address : ${data.address}</p>
+            <p>Venue : ${data.venue}</p>
+            <p>email : ${data.email}</p>
+        </div>
+        <div class="card-action">
+            <a href="${data.website}" target="_blank">website</a>
+            <a class="activator">See Squad</a>
+            <a onclick="deleteTeam(${data.id})">delete</a>
+        </div>
+        <div class="card-reveal text-accent-color">
+            <span class="card-title group-team text-strong">Detail Squad<i class="material-icons right">close</i></span>
+            <table class="team-squad"></table>
+        </div>
+    </div>
+        </div>
+        `
+    });
+    document.querySelector("#savedTeam").innerHTML = savedHTML;
+
+    let playerHTML = `
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Nationality</th>
+        <th>Position</th>
+    </tr>
+    </thead>
+    `;
+
+    for (let i = 0; i < obj.length; i++) {
+
+        const team = obj[i];
+        for (let j = 0; j < team.squad.length; j++) {
+            const player = team.squad[j];
+            playerHTML += `
+            <tbody>
+              <tr>
+                <td>${j + 1}</td>
+                <td>${player.name}</td>
+                <td>${player.nationality}</td>
+                <td>${player.position}</td>
+              </tr>
+            </tbody>
+              `;
+        }
+        document.getElementsByClassName("team-squad")[i].innerHTML = playerHTML;
+        playerHTML = "";
+    }
+
 }

@@ -41,7 +41,7 @@ function loadNav() {
 
 function loadPage(page) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
+    xhttp.onreadystatechange = async function () {
         if (this.readyState == 4) {
 
             if (page === "klasemen") {
@@ -49,7 +49,7 @@ function loadPage(page) {
             } else if (page === "pertandingan") {
                 pertandinganDOM().finally(() => document.querySelector("#preloader").remove());
             } else if (page === "saved") {
-
+                savedClubTeamDOM().finally(() => document.querySelector("#preloader").remove());
             }
             var content = document.querySelector("#body-content")
             if (this.status == 200) {

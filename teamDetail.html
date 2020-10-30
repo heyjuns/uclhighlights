@@ -41,7 +41,8 @@
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
     <script src="./dom.js"></script>
-
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
     <script>
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -55,9 +56,14 @@
             console.log('SW belum didukung di browser ini');
         }
         document.addEventListener("DOMContentLoaded", async function () {
-            teamDetailDOM().finally(() => {
-                document.querySelector("#preloader").remove();
-            });
+            const teamDetail = await teamDetailDOM().finally(() => {
+                document.querySelector("#preloader").remove();;
+            })
+            const saveTeam = document.getElementById("saveTeam");
+            saveTeam.onclick = function () {
+                saveClubTeam(teamDetail);
+                console.log('save clicked');
+            }
         })
     </script>
 </body>

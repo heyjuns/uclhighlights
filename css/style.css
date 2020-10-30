@@ -1,6 +1,13 @@
 *{
     font-family: 'Roboto', sans-serif;
 }
+.card-action a{
+    cursor: pointer;
+}
+.card-action a:hover{
+    font-weight: 700;
+
+}
 .brand-logo, .group-team{
     font-family: 'Oswald', sans-serif;
     letter-spacing: -0.5px !important;
