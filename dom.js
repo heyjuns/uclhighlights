@@ -24,10 +24,9 @@ async function pertandinganDOM() {
         }
     })
 };
-async function savedClubTeamDOM(){
+async function savedClubTeamDOM() {
     const savedData = await getAll();
     console.log(savedData);
-    console.log(savedData.length);
     generateDataForSavedTeam(savedData);
 }
 async function klasemenDOM() {
@@ -123,7 +122,7 @@ async function generateDataForPertandingan(obj) {
     });
     document.querySelector("#pertandingan").innerHTML = pertandinganHTML;
 }
-function simpanPertandingan(param){
+function simpanPertandingan(param) {
     console.log(param);
 }
 function generateDataForTeamDetail(data) {
@@ -265,10 +264,12 @@ function generateDataForKlasemen(obj) {
     }
 }
 
-function generateDataForSavedTeam(obj){
+function generateDataForSavedTeam(obj) {
     savedHTML = "";
-    obj.forEach(data => {
-        savedHTML += `
+
+    if (obj.length > 0) {
+        obj.forEach(data => {
+            savedHTML += `
         <div class="col s12 m6">
         <div class="card detail-card grey lighten-4">
         <div class="card-image">
@@ -294,10 +295,10 @@ function generateDataForSavedTeam(obj){
     </div>
         </div>
         `
-    });
-    document.querySelector("#savedTeam").innerHTML = savedHTML;
+        });
+        document.querySelector("#savedTeam").innerHTML = savedHTML;
 
-    let playerHTML = `
+        let playerHTML = `
     <thead>
     <tr>
         <th>No</th>
@@ -308,12 +309,12 @@ function generateDataForSavedTeam(obj){
     </thead>
     `;
 
-    for (let i = 0; i < obj.length; i++) {
+        for (let i = 0; i < obj.length; i++) {
 
-        const team = obj[i];
-        for (let j = 0; j < team.squad.length; j++) {
-            const player = team.squad[j];
-            playerHTML += `
+            const team = obj[i];
+            for (let j = 0; j < team.squad.length; j++) {
+                const player = team.squad[j];
+                playerHTML += `
             <tbody>
               <tr>
                 <td>${j + 1}</td>
@@ -323,9 +324,21 @@ function generateDataForSavedTeam(obj){
               </tr>
             </tbody>
               `;
+            }
+            document.getElementsByClassName("team-squad")[i].innerHTML = playerHTML;
+            playerHTML = "";
         }
-        document.getElementsByClassName("team-squad")[i].innerHTML = playerHTML;
-        playerHTML = "";
-    }
+    }else{
+        savedHTML +=`
+        <div class="row container text-accent-color">
+        <div class="col s12">
+            <h3>
+                Team yang disimpan belum ada. Silahkan Pilih terlebih dahulu
+            </h3>
+        </div>
+    </div>
+        `
 
+        document.querySelector("#savedTeam").innerHTML = savedHTML;
+    }
 }
