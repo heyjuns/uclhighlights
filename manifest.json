@@ -4,7 +4,7 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/index.html",
-    "app_name": "UCLHIGHLIGHTS",
+    "name": "UCLHIGHLIGHTS",
     "short_name": "UCL",
     "description": "Submission PWA 2",
     "icons": [
@@ -29,6 +29,5 @@
             "type": "image/png"
         }
     ],
-    "name": "Push Notifications FCM",
     "gcm_sender_id": "179823995518"
 }

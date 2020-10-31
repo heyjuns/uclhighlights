@@ -1,6 +1,6 @@
 async function pertandinganDOM() {
     console.log("pertandingan DOM");
-    const cacheUrl = `${BASEURL}/matches?competitions=2001`;
+    const cacheUrl = `${BASEURL}/matches?competitions=2001&dateFrom=${today}&dateTo=${nextSevenDay}`;
     return new Promise(async (resolve, reject) => {
         try {
             if ("caches" in window) {
@@ -128,7 +128,7 @@ function simpanPertandingan(param) {
 
     const options = {
         requireInteraction: true,
-        body : `Untuk jadwal pertandingan ${param.homeTeam.name} vs ${param.awayTeam.name}`
+        body : `Untuk jadwal pertandingan ${param.awayTeam.name} vs ${param.homeTeam.name}`
     };
     if (Notification.permission === "granted") {
         navigator.serviceWorker.ready.then(function (registration) {
