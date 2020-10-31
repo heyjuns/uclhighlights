@@ -44,7 +44,7 @@ self.addEventListener("fetch", function (event) {
         );
     } else {
         event.respondWith(
-            caches.match(event.request, {ignoreSearch : true})
+            caches.match(event.request, { ignoreSearch: true })
                 .then(function (response) {
                     return response || fetch(event.request);
                 })
@@ -66,3 +66,24 @@ self.addEventListener("activate", function (event) {
         })
     )
 })
+
+self.addEventListener('push', function (event) {
+    var body;
+    if (event.data) {
+        body = event.data.text();
+    } else {
+        body = 'Push message no payload';
+    }
+    var options = {
+        body: body,
+        icon: 'assets/icon.png',
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+        }
+    };
+    event.waitUntil(
+        self.registration.showNotification('Push Notification', options)
+    );
+});
