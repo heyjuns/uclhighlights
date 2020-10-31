@@ -6,7 +6,9 @@
   "dependencies": {
     "web-push": "^3.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.12.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

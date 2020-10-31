@@ -17,7 +17,7 @@ var pushSubscription = {
         "auth": "eWf5ZayuglvSSpaqzWKGNg=="
     }
 };
-var payload = 'Selamat! Aplikasi Anda sudah dapat menerima push notifikasi!';
+var payload = "Ada Jadwal pertandingan baru!";
 
 var options = {
     gcmAPIKey: '179823995518',

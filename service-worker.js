@@ -1,4 +1,4 @@
-const CACHE_NAME = "submissionpwa2"
+const CACHE_NAME = "submissionpwa2";
 var urlToCache = [
     "/",
     "/navigation.html",
@@ -19,15 +19,15 @@ var urlToCache = [
     "/pages/klasemen.html",
     "/pages/pertandingan.html",
     "/pages/saved.html",
-]
+];
 
 self.addEventListener("install", function (event) {
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
-            return cache.addAll(urlToCache)
+            return cache.addAll(urlToCache);
         })
-    )
-})
+    );
+});
 
 self.addEventListener("fetch", function (event) {
     const BASEURL = "https://api.football-data.org/v2";
@@ -37,9 +37,9 @@ self.addEventListener("fetch", function (event) {
                 .then(function (cache) {
                     return fetch(event.request)
                         .then(function (response) {
-                            cache.put(event.request.url, response.clone())
+                            cache.put(event.request.url, response.clone());
                             return response;
-                        })
+                        });
                 })
         );
     } else {
@@ -48,9 +48,9 @@ self.addEventListener("fetch", function (event) {
                 .then(function (response) {
                     return response || fetch(event.request);
                 })
-        )
+        );
     }
-})
+});
 
 self.addEventListener("activate", function (event) {
     event.waitUntil(
@@ -59,24 +59,24 @@ self.addEventListener("activate", function (event) {
                 cacheNames.map(function (cacheName) {
                     if (cacheName != CACHE_NAME) {
                         console.log("SW: Cache ", cacheName, " dihapus");
-                        return caches.delete(cacheName)
+                        return caches.delete(cacheName);
                     }
                 })
-            )
+            );
         })
-    )
-})
+    );
+});
 
-self.addEventListener('push', function (event) {
+self.addEventListener("push", function (event) {
     var body;
     if (event.data) {
         body = event.data.text();
     } else {
-        body = 'Push message no payload';
+        body = "Push message no payload";
     }
     var options = {
         body: body,
-        icon: 'assets/icon.png',
+        icon: "assets/icon.png",
         vibrate: [100, 50, 100],
         data: {
             dateOfArrival: Date.now(),
@@ -84,6 +84,6 @@ self.addEventListener('push', function (event) {
         }
     };
     event.waitUntil(
-        self.registration.showNotification('Push Notification', options)
+        self.registration.showNotification("Push Notification", options)
     );
 });

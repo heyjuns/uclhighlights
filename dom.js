@@ -1,9 +1,9 @@
 async function pertandinganDOM() {
     console.log("pertandingan DOM");
-    const cacheUrl = `${BASEURL}/matches?competitions=2001`
+    const cacheUrl = `${BASEURL}/matches?competitions=2001`;
     return new Promise(async (resolve, reject) => {
         try {
-            if ('caches' in window) {
+            if ("caches" in window) {
                 let objectFromCaches = await (await caches.match(cacheUrl)).json();
                 if (objectFromCaches) {
                     console.log(`cache ${cacheUrl} found, load data from cache`);
@@ -22,7 +22,7 @@ async function pertandinganDOM() {
             }
 
         }
-    })
+    });
 };
 async function savedClubTeamDOM() {
     const savedData = await getAll();
@@ -34,7 +34,7 @@ async function klasemenDOM() {
     return new Promise(async (resolve, reject) => {
         try {
             // mencoba cek apakah caches sudah ada
-            if ('caches' in window) {
+            if ("caches" in window) {
                 let objectFromCaches = await (await caches.match(cacheUrl)).json();
                 if (objectFromCaches) {
                     let TOTALTYPE = objectFromCaches.standings.filter(x => x.type === "TOTAL");
@@ -55,14 +55,14 @@ async function klasemenDOM() {
                 reject(error);
             }
         }
-    })
+    });
 }
 function teamDetailDOM() {
     const idParam = new URLSearchParams(window.location.search).get("id");
     const cacheUrl = `${BASEURL}/teams/${idParam}`;
     return new Promise(async (resolve, reject) => {
         try {
-            if ('caches' in window) {
+            if ("caches" in window) {
                 let objectFromCaches = await (await caches.match(cacheUrl)).json();
                 if (objectFromCaches) {
                     console.log(`cache ${cacheUrl} found, load data from cache`);
@@ -82,7 +82,7 @@ function teamDetailDOM() {
             }
 
         }
-    })
+    });
 }
 function errorDOM() {
     let errorHTML = "";
@@ -114,11 +114,11 @@ async function generateDataForPertandingan(obj) {
                 <div>${new Date(element.utcDate).toLocaleString()}</div>
             </div>
             <div class="card-action">
-                <a onclick="simpanPertandingan(${JSON.stringify(element).split('"').join("&quot;")})">Reminder</a>
+                <a onclick="simpanPertandingan(${JSON.stringify(element).split("\"").join("&quot;")})">Reminder</a>
             </div>
             </div>
         </div>
-        `
+        `;
     });
     document.querySelector("#pertandingan").innerHTML = pertandinganHTML;
 }
@@ -228,7 +228,7 @@ function generateDataForKlasemen(obj) {
     </div>
     `;
         for (let j = 0; j < obj[i].table.length; j++) {
-            const team = obj[i]['table'][j];
+            const team = obj[i]["table"][j];
             teamHTML += `
             <a href="./teamDetail.html?id=${team.team.id}">
                 <div class="col s5 word-wrap">
@@ -260,7 +260,7 @@ function generateDataForKlasemen(obj) {
         `;
         }
         document.getElementsByClassName("klasemen-content")[i].innerHTML = teamHTML;
-        teamHTML = '';
+        teamHTML = "";
     }
 }
 
@@ -294,7 +294,7 @@ function generateDataForSavedTeam(obj) {
         </div>
     </div>
         </div>
-        `
+        `;
         });
         document.querySelector("#savedTeam").innerHTML = savedHTML;
 
@@ -337,7 +337,7 @@ function generateDataForSavedTeam(obj) {
             </h3>
         </div>
     </div>
-        `
+        `;
 
         document.querySelector("#savedTeam").innerHTML = savedHTML;
     }

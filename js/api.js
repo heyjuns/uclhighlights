@@ -1,9 +1,9 @@
-console.log('API CALL')
-const BASEURL = 'https://api.football-data.org/v2';
-const APIKEY = 'ca68614c1778414898dfdac44886b575';
+console.log("API CALL");
+const BASEURL = "https://api.football-data.org/v2";
+const APIKEY = "ca68614c1778414898dfdac44886b575";
 const ADDITIONALHEADERS = {
-    'X-Auth-Token': APIKEY
-}
+    "X-Auth-Token": APIKEY
+};
 
 async function jadwalTanding() {
     const d = new Date();
@@ -13,7 +13,7 @@ async function jadwalTanding() {
         let response = await (await fetch(`${BASEURL}/matches?competitions=2001&dateFrom=${today}&dateTo=${nextSevenDay}`, { headers: ADDITIONALHEADERS })).json();
         return Promise.resolve(response);
     } catch (error) {
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
 }
 
@@ -22,7 +22,7 @@ async function klasemenLiga() {
         let response = await (await fetch(`${BASEURL}/competitions/2001/standings`, { headers: ADDITIONALHEADERS })).json();
         return Promise.resolve(response);
     } catch (error) {
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
 
 }
@@ -31,6 +31,6 @@ async function TeamDetail(id) {
         let response = await (await fetch(`${BASEURL}/teams/${id}`, { headers: ADDITIONALHEADERS })).json();
         return Promise.resolve(response);
     } catch (error) {
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
 }
