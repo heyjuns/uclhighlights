@@ -1,12 +1,12 @@
 console.log("API CALL");
 const BASEURL = "https://api.football-data.org/v2";
 const APIKEY = "ca68614c1778414898dfdac44886b575";
-const d = new Date();
-const today = new Date(d.getFullYear(),d.getMonth(),d.getDate()).toISOString().split("T")[0];
-const nextSevenDay = new Date(d.getFullYear(),d.getMonth(),d.getDate()+7).toISOString().split("T")[0];
 const ADDITIONALHEADERS = {
     "X-Auth-Token": APIKEY
 };
+const d = new Date();
+const today = new Date(d.getFullYear(),d.getMonth(),d.getDate()).toISOString().split("T")[0];
+const nextSevenDay = new Date(d.getFullYear(),d.getMonth(),d.getDate()+7).toISOString().split("T")[0];
 
 async function jadwalTanding() {
     try {
