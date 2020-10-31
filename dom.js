@@ -124,6 +124,20 @@ async function generateDataForPertandingan(obj) {
 }
 function simpanPertandingan(param) {
     console.log(param);
+    const title = `Ingatkan Saya Tanggal ${new Date(param.utcDate).toLocaleString()}`;
+
+    const options = {
+        requireInteraction: true,
+        body : `Untuk jadwal pertandingan ${param.homeTeam.name} vs ${param.awayTeam.name}`
+    };
+    if (Notification.permission === "granted") {
+        navigator.serviceWorker.ready.then(function (registration) {
+            registration.showNotification(title, options);
+        });
+    } else {
+        console.error("Fitur notifikasi tidak diijinkan.");
+    }
+
 }
 function generateDataForTeamDetail(data) {
     teamHTML = "";
@@ -328,8 +342,8 @@ function generateDataForSavedTeam(obj) {
             document.getElementsByClassName("team-squad")[i].innerHTML = playerHTML;
             playerHTML = "";
         }
-    }else{
-        savedHTML +=`
+    } else {
+        savedHTML += `
         <div class="row container text-accent-color">
         <div class="col s12">
             <h3>
