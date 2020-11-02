@@ -11,9 +11,9 @@ async function saveClubTeam(team) {
         const transaction = await promise.transaction("club", "readwrite").objectStore("club");
         await transaction.add(team);
         await transaction.complete;
-        return alert("Berhasil menyimpan team");
+        return M.toast({html: "Berhasil menyimpan Team"});
     } catch (error) {
-        alert(("Team yang ingin disimpan sudah ada"));
+        return M.toast({html:"Team yang ingin disimpan sudah ada"});
     }
 }
 
@@ -23,10 +23,10 @@ async function deleteTeam(id) {
         const transaction = await promise.transaction("club", "readwrite").objectStore("club");
         await transaction.delete(id);
         await transaction.complete;
-        alert("Berhasil menghapus Team");
+        M.toast({html: "Berhasil menghapus Team"});
         return savedClubTeamDOM();
     } catch (error) {
-        alert(`Gagal menghapus Team. Error: ${error}`);
+        return M.toast({html:`Gagal menghapus Team. Error: ${error}`});
     }
 }
 

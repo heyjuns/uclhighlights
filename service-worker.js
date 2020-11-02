@@ -9,6 +9,8 @@ var urlToCache = [
     "/js/materialize.min.js",
     "/js/nav.js",
     "/js/api.js",
+    "/js/db.js",
+    "/js/idb.js",
     "/manifest.json",
     "/dom.js",
     "/assets/icon.png",
@@ -19,6 +21,11 @@ var urlToCache = [
     "/pages/klasemen.html",
     "/pages/pertandingan.html",
     "/pages/saved.html",
+    "https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+    "https://fonts.gstatic.com/s/oswald/v35/TK3iWkUHHAIjg752FD8Gl-1PK62t.woff2",
+    "https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+    "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap",
 ];
 
 self.addEventListener("install", function (event) {
