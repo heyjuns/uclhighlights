@@ -146,7 +146,7 @@ function generateDataForTeamDetail(data) {
         <div class="col s12">
             <div class="card detail-card grey lighten-4">
                 <div class="card-image">
-                    <img src="${data.crestUrl}">
+                    <img src="${data.crestUrl}" alt="logo team">
                 </div>
                 <div class="card-content text-accent-color">
                     <span class="group-team text-strong card-title">${data.name}</span>
@@ -246,7 +246,7 @@ function generateDataForKlasemen(obj) {
             teamHTML += `
             <a href="./teamDetail.html?id=${team.team.id}">
                 <div class="col s5 word-wrap">
-                    <img src="${team.team.crestUrl}"/>
+                    <img width="15px" height="15px" src="${team.team.crestUrl}" alt="logo team"/>
                     ${team.team.name}
                 </div>
                 <div class="col s1">
@@ -287,7 +287,7 @@ function generateDataForSavedTeam(obj) {
         <div class="col s12 m6">
         <div class="card detail-card grey lighten-4">
         <div class="card-image">
-            <img src="${data.crestUrl}">
+            <img width="15px" height="15px" src="${data.crestUrl}" alt="logo team">
         </div>
         <div class="card-content text-accent-color">
             <span class="group-team text-strong card-title">${data.name}</span>

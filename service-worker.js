@@ -18,6 +18,7 @@ var urlToCache = [
     "/assets/icon-256x256.png",
     "/assets/icon-384x384.png",
     "/assets/icon-512x512.png",
+    "/assets/maskable_icon.png",
     "/pages/klasemen.html",
     "/pages/pertandingan.html",
     "/pages/saved.html",
