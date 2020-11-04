@@ -287,7 +287,7 @@ function generateDataForSavedTeam(obj) {
         <div class="col s12 m6">
         <div class="card detail-card grey lighten-4">
         <div class="card-image">
-            <img width="15px" height="15px" src="${data.crestUrl}" alt="logo team">
+            <img src="${data.crestUrl}" alt="logo team">
         </div>
         <div class="card-content text-accent-color">
             <span class="group-team text-strong card-title">${data.name}</span>

@@ -13,6 +13,7 @@ var urlToCache = [
     "/js/idb.js",
     "/manifest.json",
     "/dom.js",
+    "/teamDetail.js",
     "/assets/icon.png",
     "/assets/icon-192x192.png",
     "/assets/icon-256x256.png",
